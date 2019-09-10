@@ -8,14 +8,34 @@ function addMessage(message) {
     myMessage.save(); //Instancio una nueva clase de este modelo
 }
 
+// async function getMessages(filterUser) {
+//     let filter = {};
+//     if (filterUser !== null) {
+//         filter = { user: filterUser }
+//         //Trae solo los usuarios que coinciden con filterUser 
+//     }
+//     const messages = await Model.find(filter);
+//     return messages //Retorna toda la lista de mensajes
+// }
+
 async function getMessages(filterUser) {
-    let filter = {};
-    if (filterUser !== null) {
-        filter = { user: filterUser }
-        //Trae solo los usuarios que coinciden con filterUser 
-    }
-    const messages = await Model.find(filter);
-    return messages //Retorna toda la lista de mensajes
+    return new Promise((resolve, reject) => {
+        let filter = {};
+        if (filterUser !== null) {
+            filter = { user: filterUser }
+            //Trae solo los usuarios que coinciden con filterUser 
+        }
+        Model.find(filter)
+            .populate('user')
+            //Relaciona el id que le hemos pasado, con su user
+            .exec((error, populated) => { //Forma de ejecutar el populate
+                if (error) {
+                    reject(error);
+                    return false
+                }
+                resolve(populated)
+            })
+    })
 }
 
 async function updateText(id, message) {
@@ -29,7 +49,7 @@ async function updateText(id, message) {
 }
 function removeMessage(id) {
     return Model.deleteOne({
-        _id: id 
+        _id: id
     })
 }
 
