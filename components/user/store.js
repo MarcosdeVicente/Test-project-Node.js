@@ -15,7 +15,17 @@ async function getUser(filterName) {
     return users;
 }
 
+async function updateName(id, name) {
+    const foundName = await Model.findOne({
+        _id: id
+    });
+    foundName.name = name
+    const newName = await foundName.save();
+    return newName;
+}
+
 module.exports = {
     add: addUser,
-    list: getUser
+    list: getUser,
+    updateName: updateName
 }

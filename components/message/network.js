@@ -28,6 +28,15 @@ router.post('/', function (req, res) {
         })
 });
 
+router.delete('/:id', function (req, res) {
+    controller.deleteMessage(req.params.id)
+        .then(() => {
+            response.success(req, res, `Usuario ${req.params.id} eliminado`, 200)
+        })
+        .catch(e => {
+            response.error(req, res, 'Error interno', 500, e)
+        })
+})
 //Por el método patch, nos viene un id
 router.patch('/:id', function (req, res) {
     console.log(req.params.id)
@@ -40,15 +49,5 @@ router.patch('/:id', function (req, res) {
         })
     res.send('Ok')
 });
-
-router.delete('/:id', function (req, res) {
-    controller.deleteMessage(req.params.id)
-        .then(() => {
-            response.success(req, res, `Usuario ${req.params.id} eliminado`, 200)
-        })
-        .catch(e => {
-            response.error(req, res, 'Error interno', 500, e)
-        })
-})
 
 module.exports = router;

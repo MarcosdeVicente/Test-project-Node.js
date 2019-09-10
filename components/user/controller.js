@@ -17,8 +17,19 @@ function getUser(filterName) {
     })
 }
 
+function updateUser(id, name) {
+    return new Promise(async (resolve, reject) => {
+        if (!id || !name) {
+            reject('Invalid data');
+            return false;
+        }
+        const result = await store.updateName(id, name);
+        resolve(result);
+    })
+}
 
 module.exports = {
     addUser,
-    getUser
+    getUser,
+    updateUser
 }
