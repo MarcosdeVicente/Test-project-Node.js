@@ -3,14 +3,15 @@ const store = require('./store');
 
 //Vienes de crear la petición en el network
 
-function addMessage(user, message) {
+function addMessage(user, message, chat) {
     return new Promise((resolve, reject) => {
-        if (!user || !message) { //Si no existe ni user ni message entonces
+        if (!user || !message || !chat) { //Si no existe ni user ni message entonces
             console.error('[messageController] No hay usuario o mensaje')
             return reject('Los datos son incorrectos');
         }
 
         const fullMessage = {
+            chat: chat,
             user: user,
             message: message,
             date: new Date(),

@@ -8,16 +8,6 @@ function addMessage(message) {
     myMessage.save(); //Instancio una nueva clase de este modelo
 }
 
-// async function getMessages(filterUser) {
-//     let filter = {};
-//     if (filterUser !== null) {
-//         filter = { user: filterUser }
-//         //Trae solo los usuarios que coinciden con filterUser 
-//     }
-//     const messages = await Model.find(filter);
-//     return messages //Retorna toda la lista de mensajes
-// }
-
 async function getMessages(filterUser) {
     return new Promise((resolve, reject) => {
         let filter = {};
