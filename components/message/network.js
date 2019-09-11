@@ -22,17 +22,12 @@ router.get('/', function (req, res) {
         .catch(e => {
             response.error(req, res, 'Unexpected error', 500, error)
         })
-}); 
+});
 
 router.post('/', upload.single('file'), function (req, res) {
-     //Añadimos el middleware upload (punto por donde va a pasar antes de entrar en la function)
-     console.log(req.file);
-    controller.addMessage(
-        req.body.user, 
-        req.body.message, 
-        req.body.chat,
-        req.file
-        )
+    //Añadimos el middleware upload (punto por donde va a pasar antes de entrar en la function)
+    console.log(req.file);
+    controller.addMessage(req.body.user, req.body.message, req.body.chat, req.file)
         .then((fullMessage) => {
             response.success(req, res, fullMessage, 201)
         })

@@ -1,5 +1,6 @@
 
 const store = require('./store');
+const socket = require('../../socket').socket;
 
 //Vienes de crear la petición en el network
 
@@ -24,6 +25,10 @@ function addMessage(user, message, chat, file) {
         };
 
         store.add(fullMessage);
+
+        socket.io.emit('message', fullMessage);
+        //Con esto ya está emitiendo los mensajes
+
         resolve(fullMessage);
     })
     console.log(fullMessage)
