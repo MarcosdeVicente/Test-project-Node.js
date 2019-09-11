@@ -1,8 +1,14 @@
 const express = require('express');
 const response = require('../../network/response')
+const multer = require('multer'); //npm i multer
 
 const controller = require('./controller');
 const router = express.Router();
+
+const upload = multer({
+    dest: 'public/files/', //Ruta donde guardamos el archivo
+})
+
 
 //Tras hacer esta petición directos al controller.js
 
@@ -18,8 +24,15 @@ router.get('/', function (req, res) {
         })
 }); 
 
-router.post('/', function (req, res) {
-    controller.addMessage(req.body.user, req.body.message, req.body.chat)
+router.post('/', upload.single('file'), function (req, res) {
+     //Añadimos el middleware upload (punto por donde va a pasar antes de entrar en la function)
+     console.log(req.file);
+    controller.addMessage(
+        req.body.user, 
+        req.body.message, 
+        req.body.chat,
+        req.file
+        )
         .then((fullMessage) => {
             response.success(req, res, fullMessage, 201)
         })

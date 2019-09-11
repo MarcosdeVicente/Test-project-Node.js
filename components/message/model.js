@@ -15,11 +15,12 @@ const mySchema = new Schema({
         type: Schema.ObjectId,
         ref: 'Chat',
     },
-    date: Date, 
+    date: Date,
+    file: String, 
 });
 
 //Modelo para la bbdd en relación a menssage
-const model = mongoose.model('Message', mySchema);
+const model = mongoose.model('Message', mySchema); 
 module.exports = model;
 
 
